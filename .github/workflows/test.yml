@@ -1,0 +1,26 @@
+name: Test Environment Variables
+
+on:
+  workflow_dispatch:  # 手动触发
+
+jobs:
+  test-vars:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: ${{ secrets.IMAGE_NAME }}   # 仓库变量
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Check Docker Hub Secrets
+        run: |
+          echo "IMAGE_NAME: ${{ secrets.IMAGE_NAME }}"
+          echo "DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}"
+          
+          # ⚠️ 不要打印密码，检查是否存在
+          if [ -z "${{ secrets.DOCKERHUB_PASSWORD }}" ]; then
+            echo "DOCKERHUB_PASSWORD is not set"
+            exit 1
+          else
+            echo "DOCKERHUB_PASSWORD is set"
+          fi
