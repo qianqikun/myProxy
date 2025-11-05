@@ -40,5 +40,3 @@ jobs:
           push: true
           tags: ${{ secrets.IMAGE_NAME }}:latest
           platforms: linux/amd64,linux/arm64
-          cache-from: type=registry,ref=${{ secrets.IMAGE_NAME }}:latest
-          cache-to: type=registry,ref=${{ secrets.IMAGE_NAME }}:latest,mode=max
