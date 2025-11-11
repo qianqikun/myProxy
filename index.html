@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    @property --angle {
+      syntax: '<angle>';
+      inherits: false;
+      initial-value: 0deg;
+    }
+
+    .frame {
+      position: relative;
+      width: 240px;
+      height: 120px;
+      border-radius: 16px;
+      padding: 6px;
+      overflow: visible;
+    }
+
+    .frame::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 6px;
+      background: conic-gradient(from var(--angle), #ff007a, #00ffe0, #007bff, #ff007a);
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#000 0 0);
+      mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#000 0 0);
+      mask-composite: exclude;
+      z-index: 1;
+      animation: spin 4s linear infinite;
+      filter: none;
+    }
+
+    /* 发光阴影，和渐变同源，但更模糊 */
+    .frame::after {
+      content: '';
+      position: absolute;
+      inset: -12px;
+      /* 放大以制造外发光 */
+      border-radius: 20px;
+      background: conic-gradient(from var(--angle), #ff007a, #00ffe0, #007bff, #ff007a);
+      z-index: 0;
+      filter: blur(18px) brightness(1.1);
+      animation: spin 4s linear infinite;
+      pointer-events: none;
+      opacity: 0.9;
+    }
+
+    .inner {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      background: #0f0f10;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+
+    @keyframes spin {
+      from {
+        --angle: 0deg;
+      }
+      to {
+        --angle: 360deg;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="frame">
+    <div class="inner">CONTENT</div>
+  </div>
+</body>
+
+</html>

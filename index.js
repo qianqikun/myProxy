@@ -1,6 +1,6 @@
 import express from 'express'
 import fetch from 'node-fetch'
-
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 const app = express()
 const port = process.env.PORT || 8000
 
