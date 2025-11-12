@@ -93,8 +93,10 @@ app.all('/', async (req, res) => {
     // --- JSON 配置 + API 前缀替换 ---
     if (configParam === '1' || configParam === '0') {
       const jsonUrl = `https://raw.githubusercontent.com/qianqikun/LunaTV-config/main/${pathNameParam}.json`
-      const response = await fetch(jsonUrl)
-      console.log("💰 fetch response", response)
+      const response = await fetch(jsonUrl).catch(err => {
+        console.log("fetch jsonUrl error", err)
+        throw err
+      })
       const data = await response.json()
 
       const finalData = configParam === '1'
