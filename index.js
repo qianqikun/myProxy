@@ -94,6 +94,7 @@ app.all('/', async (req, res) => {
     if (configParam === '1' || configParam === '0') {
       const jsonUrl = `https://raw.githubusercontent.com/qianqikun/LunaTV-config/main/${pathNameParam}.json`
       const response = await fetch(jsonUrl)
+      console.log("💰 fetch response", response)
       const data = await response.json()
 
       const finalData = configParam === '1'
